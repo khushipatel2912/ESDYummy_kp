@@ -7,10 +7,7 @@ import com.khushi.ESD.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,5 +25,14 @@ public class CustomerController {
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequest request) {
         String token = customerService.login(request);
         return ResponseEntity.ok(token);
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateCustomer(@PathVariable Long id, @RequestBody @Valid CustomerRequest request) {
+        return ResponseEntity.ok(customerService.updateCustomer(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomer(@RequestBody Long id) {
+        return ResponseEntity.ok(customerService.deleteCustomer(id));
     }
 }
